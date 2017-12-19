@@ -64,6 +64,12 @@ function build_new_commit() {
     timestamp=$(git show -s --format=%ct $commit)
     date=$(date --date "@$timestamp" +'%Y%m%d-%H%M%S')
     build_commit $commit "continuous" "$date-$commit"
+
+    cd $WD
+
+    git add "$tag/$name.zip"
+    git commit -m "Builds $commit"
+    git push origin master
 }
 
 set -e
