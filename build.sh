@@ -8,15 +8,16 @@ LAST_BUILT_FILE="$DIR/build/stun-builds.last"
 PLATFORM=$1
 
 if [[ "$PLATFORM" == "linux" ]]; then
-    echo 'Running Linux builds'
+    PLATFORM_NAME='Linux'
 elif [[ "$PLATFORM" == "bsd" ]]; then
-    echo 'Running BSD builds'
+    PLATFORM_NAME='BSD'
 elif [[ "$PLATFORM" == "osx" ]]; then
-    echo 'Running macOS builds'
+    PLATFORM_NAME='macOS'
 else
     echo "Unknown platform: $PLATFORM"
     exit 1
 fi
+echo "Running $PLATFORM_NAME builds"
 
 function initialize() {
     if [[ ! -e $WD ]]; then
@@ -73,7 +74,8 @@ function build_new_commit() {
     cd $DIR
 
     git add "$tag/$name.zip"
-    git commit -m "Builds $commit"
+    git commit -m "Builds $commit on $PLATFORM_NAME"
+    git pull --rebase origin master
     git push origin master
 }
 
