@@ -65,7 +65,7 @@ function build_new_commit() {
     date=$(date --date "@$timestamp" +'%Y%m%d-%H%M%S')
     build_commit $commit "continuous" "$date-$commit"
 
-    cd $WD
+    cd $DIR
 
     git add "$tag/$name.zip"
     git commit -m "Builds $commit"
