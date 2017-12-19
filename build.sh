@@ -69,7 +69,7 @@ function build_new_commit() {
     else
         date=$(date -r $timestamp +'%Y%m%d-%H%M%S')
     fi
-    build_commit $commit "continuous" "$date-$commit"
+    build_commit $commit "continuous" "$date-$PLATFORM-$commit"
 
     cd $DIR
 
