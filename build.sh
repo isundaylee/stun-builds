@@ -2,9 +2,9 @@
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 REPO="git@github.com:isundaylee/stun.git"
-WD="/tmp/stun-builds"
+WD="$DIR/build/stun-builds"
 BRANCH="master"
-LAST_BUILT_FILE="/tmp/stun-builds.last"
+LAST_BUILT_FILE="$DIR/build/stun-builds.last"
 PLATFORM=$1
 
 if [[ "$PLATFORM" == "linux" ]]; then
@@ -62,7 +62,12 @@ function build_new_commit() {
     fi
 
     timestamp=$(git show -s --format=%ct $commit)
-    date=$(date --date "@$timestamp" +'%Y%m%d-%H%M%S')
+
+    if [[ $(uname) == 'Linux' ]]; then
+        date=$(date --date "@$timestamp" +'%Y%m%d-%H%M%S')
+    else
+        date=$(date -r $timestamp +'%Y%m%d-%H%M%S')
+    fi
     build_commit $commit "continuous" "$date-$commit"
 
     cd $DIR
